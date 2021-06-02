@@ -16,168 +16,6 @@ if (!firebase.apps.length) {
 function App() {
 
 
-//   const [title, setTitle] = useState('');
-//   const [user, setUser] = useState({
-//     isSignedIn: false,
-//     name: '',
-//     email:'',
-//     photo: ''
-//   })
-
-//   const provider = new firebase.auth.GoogleAuthProvider();
-//   const handleSignIn = () =>{
-//     firebase.auth().signInWithPopup(provider)
-//     .then(res => {
-//       const {displayName, photoURL, email} = res.user;
-//       const signedInUser = {
-//         isSignedIn: true,
-//         name: displayName,
-//         email: email,
-//         photo: photoURL
-//       }
-//       setUser(signedInUser);
-//       console.log(displayName, email, photoURL);
-//     })
-//     .catch(err => {
-//       console.log(err);
-//       console.log(err.message);
-//     })
-//   }
-
-//   const handleSignOut = () => {
-//     firebase.auth().signOut()
-//     .then(res => {
-//       const signedOutUser = {
-//         isSignedIn: false, 
-//         name: '',
-//         phot:'',
-//         email:'',
-//         password:'',
-//         error:'',
-//         isValid:false,
-//         existingUser: false
-//       }
-//       setUser(signedOutUser);
-//       console.log(res);
-//     })
-//     .catch( err => {
-
-//     })
-//   }
-
-//   const is_valid_email = email =>  /(.+)@(.+){2,}\.(.+){2,}/.test(email); 
-//   const hasNumber = input => /\d/.test(input);
-  
-//   const switchForm = e =>{
-//     const createdUser = {...user};
-//     createdUser.existingUser = e.target.checked;
-//     setUser(createdUser);
-//   }
-//   const handleChange = e =>{
-//     const newUserInfo = {
-//       ...user
-//     };
-//     //debugger;
-//     // perform validation
-//     let isValid = true;
-//     if(e.target.name === 'email'){
-//       isValid = is_valid_email(e.target.value);
-//     }
-//     if(e.target.name === "password"){
-//       isValid = e.target.value.length > 8 && hasNumber(e.target.value);
-//     }
-
-//     newUserInfo[e.target.name] = e.target.value;
-//     newUserInfo.isValid = isValid;
-//     setUser(newUserInfo);
-//   }
-
-//   const createAccount = (event) => {
-//     if(user.isValid){
-//       firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
-//       .then(res => {
-//         console.log(res);
-//         const createdUser = {...user};
-//         createdUser.isSignedIn = true;
-//         createdUser.error = '';
-//         setUser(createdUser);
-//       })
-//       .catch(err => {
-//         console.log(err.message);
-//         const createdUser = {...user};
-//         createdUser.isSignedIn = false;
-//         createdUser.error = err.message;
-//         setUser(createdUser);
-//       })
-//     }
-//     event.preventDefault();
-//     event.target.reset();
-//   } 
-
-//   const signInUser = event => {
-//     if(user.isValid){
-//       firebase.auth().signInWithEmailAndPassword(user.email, user.password)
-//       .then(res => {
-//         console.log(res);
-//         const createdUser = {...user};
-//         createdUser.isSignedIn = true;
-//         createdUser.error = '';
-//         setUser(createdUser);
-//       })
-//       .catch(err => {
-//         console.log(err.message);
-//         const createdUser = {...user};
-//         createdUser.isSignedIn = false;
-//         createdUser.error = err.message;
-//         setUser(createdUser);
-//       })
-//     }
-//     event.preventDefault();
-//     event.target.reset();
-//   }
-// console.log(title);
-//   return (
-//     <div className="App">
-//       {
-//         user.isSignedIn ? <button onClick={handleSignOut} >Sign out</button> :
-//         <button onClick={handleSignIn} >Sign in</button>
-//       }
-//       {
-//         user.isSignedIn && <div>
-//           <p> Welcome, {user.name}, {title}</p>
-//           <p>Your email: {user.email}</p>
-//           <img src={user.photo} alt=""></img>
-//         </div>
-//       }
-//       <h1>Our own Authentication</h1>
-//       <input type="checkbox" name="switchForm" onChange={switchForm} id="switchForm"/>
-//       <label htmlFor="switchForm"> Returning User</label>
-//       <form style={{display:user.existingUser ? 'block': 'none'}} onSubmit={signInUser}>
-//         <input type="text" onBlur={handleChange} name="email" placeholder="Your Email" required/>
-//         <br/>
-//         <input type="password" onBlur={handleChange} name="password" placeholder="Your Password" required/>
-//         <br/>
-//         <input type="submit" value="SignIn"/>
-//       </form>
-//       <form style={{display:user.existingUser ? 'none': 'block'}} onSubmit={createAccount}>
-//       <input type="text" onChange={event => setTitle(event.target.value)} onBlur={handleChange} name="name" placeholder="Your Name" required/>
-//         {/* <input type="text" onBlur={handleChange} name="name" placeholder="Your Name" required/> */}
-//         <br/>
-//         <input type="text" onBlur={handleChange} name="email" placeholder="Your Email" required/>
-//         <br/>
-//         <input type="password" onBlur={handleChange} name="password" placeholder="Your Password" required/>
-//         <br/>
-//         <input type="submit" value="Create Account"/>
-//       </form>
-//       {
-//         user.error && <p style={{color:'red'}}>{user.error}</p>
-//       }
-//     </div>
-//   );
-
-
-
-const [title, setTitle] = useState('');
   const [newUser,setNewUser] = useState(false);
   const [user,setUser]= useState({
     isSignedIn:false,
@@ -285,20 +123,18 @@ const [title, setTitle] = useState('');
         .then((userCredential) => {
           // Signed in 
           var User = userCredential.user;
-          console.log(user);
-
-          updateUserName(User.userName);
-          const newUserInfo = {...user , error :'' , success : true};
+          console.log(User);
+          updateUserName(user.userName);
+          const newUserInfo = {...User , error :'' , success : true};
           setUser(newUserInfo);
           console.log(user);
-          // updateUserName(user.userName);
           console.log(user.userName);
         })
         .catch((error) => {
           var errorCode = error.code;
           var errorMessage = error.message;
           console.log(errorCode , errorMessage);
-          const newUserInfo = {...user, error: errorMessage , success: false};
+          const newUserInfo = {...User, error: errorMessage , success: false};
           setUser(newUserInfo);
         });
       console.log("Form submitted");
@@ -309,9 +145,10 @@ const [title, setTitle] = useState('');
       firebase.auth().signInWithEmailAndPassword(user.email, user.password)
         .then((userCredential) => {
           // Signed in
-          var user = userCredential.user;
-          console.log(user);
-          const newUserInfo = {...user, error:'', success:true}
+          console.log(userCredential);
+          var oldUser = userCredential.user;
+          console.log(oldUser);
+          const newUserInfo = {...oldUser, error:'', success:true}
           setUser(newUserInfo);
           console.log(user);
           // ...
@@ -319,7 +156,7 @@ const [title, setTitle] = useState('');
         .catch((error) => {
           var errorCode = error.code;
           var errorMessage = error.message;
-          const newUserInfo = {...user, error:errorMessage, success:false}
+          const newUserInfo = {...User, error:errorMessage, success:false}
           setUser(newUserInfo);
           console.log(user);
         });
@@ -350,9 +187,9 @@ const [title, setTitle] = useState('');
       <button onClick={handleFbSignIn}>Sign in with Facebook</button>
       {
         user.isSignedIn && <div>
-          {/* <h3>Welcome, {user.userName}</h3>
+          <h3>Welcome, {user.userName}</h3>
           <p>Your mail= {user.email}</p>
-          <img src={user.photo} alt=""/> */}
+          <img src={user.photo} alt=""/>
         </div>
       }
 
@@ -360,6 +197,7 @@ const [title, setTitle] = useState('');
       <input type="checkbox" onChange={()=>{setNewUser(!newUser)}} name="newUser" id=""/>
       <label htmlFor="newUser">New User Sign up</label>
       <p>Name: {user.userName}</p>
+      <p>Name: {user.displayName}</p>
       <p>Email:{user.email}</p>
       <p>password: {user.password}</p>
       <form action="" onSubmit={handleSubmit}>
